@@ -1,49 +1,127 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* app/globals.css */
+/* ==========================================================================
+   Jhilan Al Farisi Portfolio - Core Stylesheet Replication
+   ========================================================================== */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
+html, body {
+  background-color: #0a0a0a;
   overflow-x: hidden;
 }
 
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --neon-cyan: #00f3ff;
+  --neon-magenta: #ff00ff;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+/* --- Panel Kaca Elektrik (Glassmorphism) --- */
+.glass-panel {
+  background: rgba(18, 18, 18, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* --- Efek Denyut WhatsApp Melayang --- */
+@keyframes wa-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+.wa-pulse {
+  animation: wa-pulse 2s infinite;
+}
+
+/* --- Efek Animasi Glitch Teks Sinematik --- */
+.glitch {
+  position: relative;
+  color: white;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+
+.glitch::before {
+  left: 2px;
+  text-shadow: -2px 0 var(--neon-magenta);
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+  left: -2px;
+  text-shadow: -2px 0 var(--neon-cyan);
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim2 5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% { clip: rect(31px, 9999px, 94px, 0); }
+  20% { clip: rect(112px, 9999px, 76px, 0); }
+  40% { clip: rect(85px, 9999px, 5px, 0); }
+  60% { clip: rect(27px, 9999px, 115px, 0); }
+  80% { clip: rect(73px, 9999px, 42px, 0); }
+  100% { clip: rect(14px, 9999px, 88px, 0); }
+}
+
+@keyframes glitch-anim2 {
+  0% { clip: rect(76px, 9999px, 116px, 0); }
+  20% { clip: rect(22px, 9999px, 61px, 0); }
+  40% { clip: rect(54px, 9999px, 21px, 0); }
+  60% { clip: rect(92px, 9999px, 5px, 0); }
+  80% { clip: rect(33px, 9999px, 76px, 0); }
+  100% { clip: rect(11px, 9999px, 44px, 0); }
+}
+
+/* --- Kartu Grid Karya Proyek --- */
+.project-card {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-card:hover {
+  border-color: var(--neon-cyan);
+  transform: translateY(-8px);
+  box-shadow: 0 10px 30px -10px rgba(0, 243, 255, 0.2);
+}
+
+/* --- Garis Bawah Tombol Filter Aktif --- */
+.filter-btn-active-line {
+  position: relative;
+}
+
+.filter-btn-active-line::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--neon-cyan);
+  box-shadow: 0 0 8px var(--neon-cyan);
+}
+
+/* --- Animasi Fade-In & Scale Modal --- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.97); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+.animate-scale-up {
+  animation: scaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
