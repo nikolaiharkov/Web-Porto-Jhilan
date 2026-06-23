@@ -1,10 +1,12 @@
-// next.config.ts
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  output: 'export', // Mengaktifkan static export murni
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // Jika Anda menggunakan Static HTML Export (output murni folder 'out')
+  
   images: {
-    unoptimized: true, // Wajib agar next/image tidak membutuhkan server Node.js optimisasi
+    // MENYELESAIKAN BUG DUPLIKASI:
+    // Memaksa Next.js menggunakan file asli di folder public secara langsung 
+    // tanpa memproses ulang dan menduplikasinya ke dalam berkas cache build
+    unoptimized: true, 
   },
 };
 
