@@ -52,42 +52,6 @@ export default function RootLayout({
           rel="stylesheet" 
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
         />
-
-        {/* Interseptor Sinkronus untuk Menyaring Peringatan Produksi Tailwind CDN */}
-        <script dangerouslySetInnerHTML={{ __html: `
-          (function() {
-            const originalWarn = console.warn;
-            console.warn = function(...args) {
-              if (args[0] && typeof args[0] === 'string' && args[0].includes('cdn.tailwindcss.com')) {
-                return;
-              }
-              originalWarn.apply(console, args);
-            };
-          })();
-        `}} />
-
-        {/* Memuat Pustaka Utama Tailwind CSS via CDN murni secara langsung */}
-        <script src="https://cdn.tailwindcss.com"></script>
-        
-        {/* Injeksi Konfigurasi Kustomisasi Tema Warna dan Font Tailwind */}
-        <script dangerouslySetInnerHTML={{ __html: `
-          tailwind.config = {
-            theme: {
-              extend: {
-                colors: {
-                  dark: '#0a0a0a',
-                  charcoal: '#121212',
-                  neonCyan: '#00f3ff',
-                  neonMagenta: '#ff00ff',
-                },
-                fontFamily: {
-                  display: ['Orbitron', 'sans-serif'],
-                  body: ['Inter', 'sans-serif'],
-                }
-              }
-            }
-          }
-        `}} />
       </head>
       <body className="bg-[#0a0a0a] text-white antialiased selection:bg-[#00f3ff] selection:text-[#0a0a0a]">
         {children}

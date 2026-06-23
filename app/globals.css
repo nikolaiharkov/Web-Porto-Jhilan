@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* app/globals.css */
 /* ==========================================================================
    Jhilan Al Farisi Portfolio - Core Stylesheet Replication
