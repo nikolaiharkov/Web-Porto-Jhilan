@@ -1,4 +1,3 @@
-// components/Lightbox.tsx
 'use client';
 
 import { useEffect } from 'react';
@@ -81,6 +80,7 @@ export default function Lightbox({ item, onClose, onPrev, onNext, hasMultiple }:
                 alt={item.title}
                 width={1920}
                 height={1080}
+                quality={90}
                 className="max-w-full max-h-[80vh] object-contain animate-scale-up"
                 priority={true}
               />

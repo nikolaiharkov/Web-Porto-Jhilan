@@ -1,4 +1,3 @@
-// components/ProjectClient.tsx
 'use client';
 
 import React, { useState } from 'react';
@@ -65,6 +64,7 @@ export default function ProjectClient({ project }: ProjectClientProps) {
                   alt={asset.title}
                   width={600}
                   height={450}
+                  quality={70}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   loading="lazy"
                 />
