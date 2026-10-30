@@ -33,6 +33,14 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+
+# storage runtime (database + media upload)
+/storage/
+/data/
+
+# aset sumber lokal, diimpor ke Media Library lewat scripts/import-assets.ts
+/foto/
 
 # vercel
 .vercel
@@ -40,3 +48,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# codegraph (index lokal per-mesin, tidak di-commit)
+/.codegraph/

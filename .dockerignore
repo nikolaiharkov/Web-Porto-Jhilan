@@ -1,0 +1,9 @@
+node_modules
+.next
+storage
+data
+foto
+.git
+.gitignore
+README.md
+CLAUDE.md

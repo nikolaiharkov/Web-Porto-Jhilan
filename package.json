@@ -5,17 +5,32 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "postinstall": "node scripts/copy-tinymce.mjs",
+    "db:migrate": "node --experimental-strip-types scripts/migrate.ts",
+    "db:bootstrap": "node --experimental-strip-types scripts/bootstrap-admin.ts",
+    "db:backup": "node --experimental-strip-types scripts/backup.ts",
+    "assets:import": "node --experimental-strip-types scripts/import-assets.ts"
   },
   "dependencies": {
+    "@tinymce/tinymce-react": "^6.3.1",
     "autoprefixer": "^10.4.20",
-    "next": "16.2.9",
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^13.0.3",
+    "iron-session": "^8.0.4",
+    "isomorphic-dompurify": "^3.19.0",
+    "next": "^16.4.3",
     "postcss": "^8.4.49",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "tailwindcss": "^3.4.17"
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "server-only": "^0.0.1",
+    "sweetalert2": "^11.26.25",
+    "tailwindcss": "^3.4.17",
+    "tinymce": "^8.10.1",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

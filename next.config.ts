@@ -1,12 +1,12 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  // Jika Anda menggunakan Static HTML Export (output murni folder 'out')
-  
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  output: "standalone",
   images: {
-    // MENYELESAIKAN BUG DUPLIKASI:
-    // Memaksa Next.js menggunakan file asli di folder public secara langsung 
-    // tanpa memproses ulang dan menduplikasinya ke dalam berkas cache build
-    unoptimized: true, 
+    unoptimized: true,
+  },
+  outputFileTracingExcludes: {
+    "/*": ["./foto/**", "./storage/**", "./data/**", "./seed/**"],
   },
 };
 
