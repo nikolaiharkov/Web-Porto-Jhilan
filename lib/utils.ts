@@ -1,5 +1,3 @@
-import { createHash, randomBytes } from "node:crypto";
-
 const DIACRITICS = /[\u0300-\u036f]/g;
 
 export function slugify(input: string): string {
@@ -10,14 +8,6 @@ export function slugify(input: string): string {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 80);
-}
-
-export function randomToken(bytes = 8): string {
-  return randomBytes(bytes).toString("hex");
-}
-
-export function shortHash(input: string): string {
-  return createHash("sha256").update(input).digest("hex").slice(0, 12);
 }
 
 export function formatDateId(iso: string | null): string {

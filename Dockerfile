@@ -20,7 +20,7 @@ ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
 ENV SESSION_SECRET=build-time-placeholder-secret-value-32
 
 RUN node scripts/copy-tinymce.mjs
-RUN npm run build
+RUN npx tsc --noEmit && npx next build --webpack
 
 # Stage 3: runtime (standalone)
 FROM node:22-bookworm-slim AS runner

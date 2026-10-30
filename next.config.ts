@@ -5,13 +5,12 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  typescript: {
-    // Type check dijalankan sebagai langkah build terpisah di Dockerfile
-    // agar tidak menumpuk memori bersama proses bundling di host 1 GB.
-    ignoreBuildErrors: true,
-  },
   outputFileTracingExcludes: {
     "/*": ["./foto/**", "./storage/**", "./data/**", "./seed/**"],
+  },
+  typescript: {
+    // tsc dijalankan terpisah di Dockerfile sebelum bundling.
+    ignoreBuildErrors: true,
   },
 };
 
