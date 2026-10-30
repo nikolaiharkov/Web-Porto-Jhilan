@@ -20,7 +20,7 @@ ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
 ENV SESSION_SECRET=build-time-placeholder-secret-value-32
 
 RUN node scripts/copy-tinymce.mjs
-RUN npx tsc --noEmit
+RUN NODE_OPTIONS=--max-old-space-size=768 npx tsc --noEmit --incremental false
 RUN npm run build
 
 # Stage 3: runtime (standalone)
