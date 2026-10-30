@@ -31,7 +31,12 @@ const DEFAULTS = {
 };
 
 export function readSettings(): SiteSettings {
-  const row = getDb().prepare("SELECT * FROM site_settings WHERE id = 1").get() as SettingsRow | undefined;
+  let row: SettingsRow | undefined;
+  try {
+    row = getDb().prepare("SELECT * FROM site_settings WHERE id = 1").get() as SettingsRow | undefined;
+  } catch {
+    row = undefined;
+  }
   if (!row) {
     return {
       ...DEFAULTS,
