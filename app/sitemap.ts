@@ -1,27 +1,35 @@
-import { MetadataRoute } from 'next';
-import { PROJECTS_DATA } from '@/data/projects';
+import type { MetadataRoute } from "next";
+import { projectRepository } from "@/repositories/project.repository";
+import { articleRepository } from "@/repositories/article.repository";
+import { getAppUrl } from "@/lib/env";
+
+export const dynamic = "force-dynamic";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://alfrsproject.biz.id';
+  const origin = getAppUrl();
+  const projects = projectRepository.list("published");
+  const articles = articleRepository.list("published");
 
-  // 1. Daftarkan halaman beranda (root) utama portfolio
-  const staticRoutes: MetadataRoute.Sitemap = [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 1.0,
-    },
+  const staticEntries: MetadataRoute.Sitemap = [
+    { url: `${origin}/`, changeFrequency: "weekly", priority: 1 },
+    { url: `${origin}/about`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${origin}/portofolio`, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${origin}/artikel`, changeFrequency: "weekly", priority: 0.8 },
   ];
 
-  // 2. Ekstrak dan daftarkan seluruh rute dinamis project secara iteratif dari repositori data
-  const projectRoutes: MetadataRoute.Sitemap = PROJECTS_DATA.map((project) => ({
-    url: `${baseUrl}/project/${project.id}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly',
-    priority: 0.8,
+  const projectEntries: MetadataRoute.Sitemap = projects.map((project) => ({
+    url: `${origin}/portofolio/${project.slug}`,
+    lastModified: project.updatedAt,
+    changeFrequency: "monthly",
+    priority: 0.7,
   }));
 
-  // 3. Gabungkan seluruh daftar rute menjadi satu kesatuan sitemap utuh
-  return [...staticRoutes, ...projectRoutes];
+  const articleEntries: MetadataRoute.Sitemap = articles.map((article) => ({
+    url: `${origin}/artikel/${article.slug}`,
+    lastModified: article.updatedAt,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
+  return [...staticEntries, ...projectEntries, ...articleEntries];
 }

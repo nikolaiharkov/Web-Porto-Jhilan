@@ -1,60 +1,67 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import SiteFooter from "@/components/site/site-footer";
+import { getAppUrl } from "@/lib/env";
+import { settingsRepository } from "@/repositories/settings.repository";
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://alfrsproject.biz.id"),
-  title: {
-    default: "Jhilan Al Farisi | Photography & Visual Arts",
-    template: "%s | Jhilan Al Farisi",
-  },
-  description: "Portofolio profesional fotografer, videografer, dan editor video - Jhilan Al Farisi.",
-  openGraph: {
-    title: "Jhilan Al Farisi | Photography & Visual Arts",
-    description: "Portofolio profesional fotografer, videografer, dan editor video - Jhilan Al Farisi.",
-    url: "https://alfrsproject.biz.id",
-    siteName: "Jhilan Al Farisi Portfolio",
-    locale: "id_ID",
-    type: "website",
-    images: [
-      {
-        url: "/faris.jpeg",
-        width: 1200,
-        height: 630,
-        alt: "Jhilan Al Farisi | Photography & Visual Arts Showcase",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Jhilan Al Farisi | Photography & Visual Arts",
-    description: "Portofolio profesional fotografer, videografer, dan editor video - Jhilan Al Farisi.",
-    images: ["/faris.jpeg"],
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = settingsRepository.get();
+  const origin = getAppUrl();
+  const description =
+    settings.aboutShort ||
+    "Portofolio film producer: fotografi, videografi, dan penyuntingan video.";
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+  const image = settings.profileMedia
+    ? settings.profileMedia.url.startsWith("http")
+      ? settings.profileMedia.url
+      : `${origin}${settings.profileMedia.url}`
+    : undefined;
+
+  return {
+    metadataBase: new URL(origin),
+    title: {
+      default: `${settings.brandName} | Photography & Visual Arts`,
+      template: `%s | ${settings.brandName}`,
+    },
+    description,
+    alternates: { canonical: "/" },
+    openGraph: {
+      type: "website",
+      locale: "id_ID",
+      url: origin,
+      siteName: settings.brandName,
+      title: `${settings.brandName} | Photography & Visual Arts`,
+      description,
+      images: image ? [{ url: image, alt: settings.brandName }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${settings.brandName} | Photography & Visual Arts`,
+      description,
+      images: image ? [image] : undefined,
+    },
+    robots: { index: true, follow: true },
+  };
+}
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="id" className="scroll-smooth">
       <head>
-        {/* Google Fonts Preconnect & Loader */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link 
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@700&display=swap" 
-          rel="stylesheet" 
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@700&display=swap"
+          rel="stylesheet"
         />
-        {/* FontAwesome CDN untuk Ikon Sosial & Antarmuka */}
-        <link 
-          rel="stylesheet" 
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         />
       </head>
-      <body className="bg-[#0a0a0a] text-white antialiased selection:bg-[#00f3ff] selection:text-[#0a0a0a]">
-        {children}
+      <body className="flex min-h-screen flex-col bg-[#0a0a0a] font-body text-white antialiased selection:bg-[#00f3ff] selection:text-[#0a0a0a]">
+        <div className="flex-1">{children}</div>
+        <SiteFooter />
       </body>
     </html>
   );
