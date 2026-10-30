@@ -11,7 +11,7 @@ RUN npm ci --no-audit --no-fund
 FROM node:22-bookworm-slim AS builder
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV NODE_OPTIONS=--max-old-space-size=2048
+ENV NODE_OPTIONS=--max-old-space-size=1024
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
@@ -20,6 +20,7 @@ ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
 ENV SESSION_SECRET=build-time-placeholder-secret-value-32
 
 RUN node scripts/copy-tinymce.mjs
+RUN npx tsc --noEmit
 RUN npm run build
 
 # Stage 3: runtime (standalone)
